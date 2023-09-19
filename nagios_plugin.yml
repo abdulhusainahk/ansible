@@ -1,0 +1,25 @@
+--- 
+- 
+  hosts: dgset-1
+  sudo: true
+  tasks: 
+    - 
+      copy: 
+        backup: true
+        dest: /usr/lib/nagios/plugins/
+        mode: 493
+        src: /tmp/check_debian_packages
+      name: "Copy plugin"
+    - 
+      copy: 
+        backup: true
+        dest: /etc/apt/
+        src: /tmp/sources.list
+      name: "Copy deb file"
+    - 
+      cron: 
+        backup: true
+        hour: "6"
+        job: "apt-get update"
+        minute: "0"
+        name: "package update"
